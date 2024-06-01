@@ -5,3 +5,27 @@ spring-boot-app:
   image: docexp1-spring
   ports:
     - "0.0.0.0:8084:8080"
+  environnement :
+    - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3300/api_etudiant
+    - SPRING_DATASOURCE_USERNAME=root
+    - SPRING_DATASOURCE_PASSWORD=root
+    - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+    - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+ depends_on:
+ -mysql
+
+ #MySQL Satabase
+ mysql:
+ image: mysql:5.7
+ restart: always
+ environnement :
+   MYSQL_DATABASE: 'api_etudiant'
+   MYSQL_ROOT_USERNAME: 'root'
+   MYSQL_ROOT_PASSWORD: 'root'
+  ports:
+    -'0.0.0.0:3300:3300'
+  volumes:
+    -api_etudiant:/var/lib/mysql
+    #liste des volumes
+    volumes:
+    api_etudiant:
